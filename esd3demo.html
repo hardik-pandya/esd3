@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="ElasticSearchD3App">
+    <head>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+ 
+        <!-- project dependency libs -->
+        <script src="js/angular.min.js"></script>
+        <script src="js/d3.v3.min.js"></script>
+        <script src="js/elastic.min.js"></script>
+        <script src="js/elastic-angular-client.min.js"></script>
+          
+        <!-- project specific files -->
+        <script src="js/elasticsearchd3app.js"></script>
+        <script src="js/elasticsearchd3controller.js"></script>
+        <script src="js/elasticsearchd3directives.js"></script>
+ 
+        <style>.bar.rect { fill: #058dc7; stroke: none; }</style>
+    </head>
+ 
+    <body ng-controller="SearchCtrl">
+
+       <h1>Finding most asked questions on Stackoverlow using Elasticseach/Angular and d3.js</h1>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <span class="span3">
+                    <input class="input-block-level" ng-model="queryTerm" type="text">
+                </span>&nbsp;
+                <button ng-click="search()" class="btn" type="button">Search</button>
+            </div>
+ 
+            <div class="row-fluid">
+                <div class="span2">
+                    <div ng-repeat="entry in results.facets.tags.terms">
+                        <a ng-click="filter('Tags', entry.term)">
+                            <i class="icon-remove-sign" ng-show="isActive('Tags', entry.term)"></i> {{ entry.term }}
+                        </a> {{ entry.count }}
+                    </div>
+                </div>
+<div class="span4">
+                    <li ng-repeat="doc in results.hits.hits">
+                        {{ doc._source.Title }}
+                    </li>
+                </div>
+                <div class="span3">
+                    <bar bind="results.facets.tags.terms" on-click="filter" field="Tags" />
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>

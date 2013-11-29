@@ -1,0 +1,14 @@
+elasticsearchd3app.config(function($routeProvider){
+	$routeProvider
+	        .when('/view1',
+				{
+				    controller:'DemoAppController',
+					templateUrl:'Partials/View1.html'
+				})
+			.when('/view2',
+				{
+				    controller:'DemoAppController',
+					templateUrl:'Partials/View2.html'
+				})
+			.otherwise({redirectTo:'/view1'})
+});
